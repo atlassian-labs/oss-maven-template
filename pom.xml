@@ -8,6 +8,15 @@
 
     <name>oss-maven-template</name>
     <description>A template for Maven-based projects that will be published to Maven Central.</description>
+    <url>https://github.com/atlassian-labs/oss-maven-template</url>
+
+    <developers>
+        <developer>
+            <id>charlie</id>
+            <name>Charlie</name>
+            <email>devrel@atlassian.com</email>
+        </developer>
+    </developers>
 
     <scm>
         <connection>scm:git:https://github.com/atlassian-labs/oss-maven-template</connection>
