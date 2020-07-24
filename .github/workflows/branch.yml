@@ -28,5 +28,5 @@ jobs:
         if: github.ref == 'refs/heads/release'
         run: |
           chmod 755 mvnw
-          ./mvnw release:prepare -Dusername=$GITHUB_USERNAME -Dpassword=$GITHUB_TOKEN
+          ./mvnw -Dusername=$GITHUB_USERNAME -Dpassword=$GITHUB_TOKEN release:prepare
           ./mvnw release:perform
