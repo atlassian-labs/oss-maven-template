@@ -21,9 +21,12 @@ jobs:
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"
         env:
-          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-          ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
+          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         if: github.ref == 'refs/heads/release'
-        run: chmod 755 mvnw && ./mvnw release:prepare release:perform
+        run: |
+          chmod 755 mvnw
+          ./mvnw release:prepare -Dusername=$GITHUB_USERNAME -Dpassword=$GITHUB_TOKEN
+          ./mvnw release:perform
