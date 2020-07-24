@@ -1,0 +1,29 @@
+name: Build Branch
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: "Checkout sources"
+        uses: actions/checkout@v2
+
+      - name: "Setup Java"
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: "Build"
+        run: chmod 755 gradlew && ./gradlew build
+
+      # Publishes to Artifactory only on push to the "release" branch.
+      - name: "Publish"
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        if: github.ref == 'refs/heads/release'
+        run: chmod 755 gradlew && ./gradlew artifactoryPublish
