@@ -22,7 +22,6 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.SIGNING_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-          export GPG_TTY=$(tty)
 
       - name: Set up Git user
         run: |
@@ -34,5 +33,6 @@ jobs:
         if: github.ref == 'refs/heads/release'
         run: |
           chmod 755 mvnw
+          export GPG_TTY=$(tty)
           ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare
           ./mvnw -Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }} release:perform
