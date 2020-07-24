@@ -34,5 +34,5 @@ jobs:
         if: github.ref == 'refs/heads/release'
         run: |
           chmod 755 mvnw
-          ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare -X
-          ./mvnw -Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }} release:perform -X
+          ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare
+          ./mvnw -Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }} release:perform
