@@ -1,5 +1,4 @@
 *.iml
 .idea
-.mvn
 build
 target
