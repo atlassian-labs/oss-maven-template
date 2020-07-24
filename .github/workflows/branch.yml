@@ -22,11 +22,14 @@ jobs:
       - name: "Publish"
         env:
           GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+          GITHUB_USER_EMAIL: ${{ secrets.GH_EMAIL }}
           GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         if: github.ref == 'refs/heads/release'
         run: |
+          git config --global user.email $GITHUB_USER_EMAIL
+          git config --global user.name $GITHUB_USERNAME
           chmod 755 mvnw
           ./mvnw -Dusername=$GITHUB_USERNAME -Dpassword=$GITHUB_TOKEN release:prepare
           ./mvnw release:perform
