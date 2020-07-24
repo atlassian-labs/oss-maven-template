@@ -35,4 +35,4 @@ jobs:
           chmod 755 mvnw
           export GPG_TTY=$(tty)
           ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare
-          ./mvnw -Darguments="-Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }}" -Dusername=${{ secrets.ARTIFACTORY_USER }} -Dpassword=${{ ARTIFACTORY_KEY }} release:perform -Pdeploy
+          ./mvnw -Darguments="-Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }}" -Dusername=${{ secrets.ARTIFACTORY_USER }} -Dpassword=${{ secrets.ARTIFACTORY_KEY }} release:perform -Pdeploy
