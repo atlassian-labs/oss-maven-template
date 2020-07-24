@@ -4,7 +4,7 @@
 
     <groupId>com.atlassian</groupId>
     <artifactId>oss-maven-template</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.10-SNAPSHOT</version>
 
     <name>oss-maven-template</name>
     <description>A template for Maven-based projects that will be published to Maven Central.</description>
@@ -19,6 +19,39 @@
         <connection>scm:git:https://github.com/atlassian-labs/oss-maven-template</connection>
         <developerConnection>scm:git:https://github.com/atlassian-labs/oss-maven-template</developerConnection>
         <url>https://github.com/atlassian-labs/oss-maven-template</url>
+        <tag>HEAD</tag>
     </scm>
+
+    <profiles>
+        <profile>
+            <id>deploy</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- This is necessary for gpg to not try to use the pinentry programs -->
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

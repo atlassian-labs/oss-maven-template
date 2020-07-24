@@ -18,12 +18,27 @@ jobs:
       - name: "Build"
         run: chmod 755 mvnw && ./mvnw install
 
+      - name: Install gpg secret key
+        run: |
+          cat <(echo -e "${{ secrets.SIGNING_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
+
+      - name: Set up Git user
+        run: |
+          git config --global user.email ${{ secrets.GH_EMAIL }}
+          git config --global user.name ${{ secrets.GH_USERNAME }}
+
+      # The Maven deploy plugin doesn't provide a way to pass credentials for the target server via
+      # command-line, so we have to create a settings.xml file on-the-fly. Come on, Maven, it's 2020!
+      - name: Create settings.xml
+        run: |
+          echo "<settings><servers><server><id>maven-atlassian-com</id><username>${{ secrets.ARTIFACTORY_USER }}</username><password>${{ secrets.ARTIFACTORY_KEY }}</password></server></servers></settings>" > ~/.m2/settings.xml
+
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"
-        env:
-          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-          ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         if: github.ref == 'refs/heads/release'
-        run: chmod 755 mvnw && ./mvnw release:prepare release:perform
+        run: |
+          chmod 755 mvnw
+          export GPG_TTY=$(tty)
+          ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare
+          ./mvnw -Darguments="-Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }}" release:perform -Pdeploy
