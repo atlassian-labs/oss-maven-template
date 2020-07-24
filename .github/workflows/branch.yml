@@ -16,7 +16,7 @@ jobs:
           java-version: 8
 
       - name: "Build"
-        run: chmod 755 gradlew && ./gradlew build
+        run: chmod 755 mvnw && ./mvnw install
 
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"
@@ -26,4 +26,4 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         if: github.ref == 'refs/heads/release'
-        run: chmod 755 gradlew && ./gradlew artifactoryPublish
+        run: chmod 755 mvnw && ./mvnw release:prepare release:perform
