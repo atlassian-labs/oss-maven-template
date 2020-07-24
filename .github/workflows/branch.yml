@@ -22,6 +22,7 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.SIGNING_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
+          export GPG_TTY=$(tty)
 
       - name: Set up Git user
         run: |
