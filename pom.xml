@@ -9,18 +9,37 @@
     <name>oss-maven-template</name>
     <description>A template for Maven-based projects that will be published to Maven Central.</description>
 
-    <parent>
-        <groupId>com.atlassian.pom</groupId>
-        <artifactId>central-pom</artifactId>
-        <version>6.0.2</version>
-    </parent>
-
     <scm>
         <connection>scm:git:https://github.com/atlassian-labs/oss-maven-template</connection>
         <developerConnection>scm:git:https://github.com/atlassian-labs/oss-maven-template</developerConnection>
         <url>https://github.com/atlassian-labs/oss-maven-template</url>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-atlassian-com</id>
+            <name>Atlassian Central Repository</name>
+            <url>https://packages.atlassian.com/maven/central</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-atlassian-com</id>
+            <name>Atlassian Central Snapshot Repository</name>
+            <url>https://packages.atlassian.com/maven/central-snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <artifactory.target.repo>maven-central-local</artifactory.target.repo>
+    </properties>
 
     <profiles>
         <profile>
@@ -46,6 +65,22 @@
                                         <arg>loopback</arg>
                                     </gpgArguments>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
