@@ -4,7 +4,7 @@
 
     <groupId>com.atlassian</groupId>
     <artifactId>oss-maven-template</artifactId>
-    <version>0.0.11-SNAPSHOT</version>
+    <version>0.0.12-SNAPSHOT</version>
 
     <name>oss-maven-template</name>
     <description>A template for Maven-based projects that will be published to Maven Central.</description>
