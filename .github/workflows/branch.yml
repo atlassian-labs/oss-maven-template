@@ -32,7 +32,7 @@ jobs:
       # command-line, so we have to create a settings.xml file on-the-fly. Come on, Maven, it's 2020!
       - name: Create settings.xml
         run: |
-          echo "<settings><servers><server><id>maven-atlassian-com</id><username>${{ secrets.ARTIFACTORY_USER }}</username><password>${{ secrets.ARTIFACTORY_KEY }}</password></server></servers></settings>" > ~/.m2/settings.xml
+          echo "<settings><servers><server><id>maven-atlassian-com</id><username>${{ secrets.ARTIFACTORY_USERNAME }}</username><password>${{ secrets.ARTIFACTORY_API_KEY }}</password></server></servers></settings>" > ~/.m2/settings.xml
 
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"

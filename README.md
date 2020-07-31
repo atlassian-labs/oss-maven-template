@@ -23,8 +23,11 @@ This project contains a [GitHub Actions workflow file](.github/workflows/branch.
 
 To make that work, add these secrets to your GitHub project:
 
-* `ARTIFACTORY_USERNAME`: your Artifactory user name
-* `ARTIFACTORY_API_KEY`: your Artifactory API key
+* `GH_EMAIL`: the email you want to associate with the commits the Maven release plugin does to update the version number
+* `GH_USERNAME`: the username you want to associate with the commits the Maven release plugin does to update the version number
+* `GH_ACCESS_TOKEN`: the Github access token to authenticate for the commits the Maven release plugin does to update the version number
+* `ARTIFACTORY_USERNAME`: your Artifactory user name for packages.atlassian.com
+* `ARTIFACTORY_API_KEY`: your Artifactory API key for packages.atlassian.com
 * `SIGNING_KEY`: the private key that is used for signing the artifacts
 * `SIGNING_PASSWORD`: the password to the private key
 
