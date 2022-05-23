@@ -36,9 +36,9 @@ jobs:
       - name: Get publish token
         id: publish-token
         if: github.ref == 'refs/heads/release'
-        uses: atlassian-labs/artifact-publish-token@v1.0
+        uses: atlassian-labs/artifact-publish-token@v1.0.1
         with:
-          output-mode: maven
+          output-modes: maven
 
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"
