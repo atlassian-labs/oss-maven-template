@@ -5,6 +5,11 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
 
       - name: "Checkout sources"
@@ -28,13 +33,12 @@ jobs:
           git config --global user.email ${{ secrets.GH_EMAIL }}
           git config --global user.name ${{ secrets.GH_USERNAME }}
 
-      # The Maven deploy plugin doesn't provide a way to pass credentials for the target server via
-      # command-line, so we have to create a settings.xml file on-the-fly. Come on, Maven, it's 2020!
-      # The artifactory secrets are provided on the level of the GitHub organization, so you don't have to
-      # set them up yourself.
-      - name: Create settings.xml
-        run: |
-          echo "<settings><servers><server><id>maven-atlassian-com</id><username>${{ secrets.ARTIFACTORY_USERNAME }}</username><password>${{ secrets.ARTIFACTORY_API_KEY }}</password></server></servers></settings>" > ~/.m2/settings.xml
+      - name: Get publish token
+        id: publish-token
+        if: github.ref == 'refs/heads/release'
+        uses: atlassian-labs/artifact-publish-token@v1.0.1
+        with:
+          output-modes: maven
 
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"

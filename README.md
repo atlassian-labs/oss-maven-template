@@ -19,7 +19,7 @@ This project template sets up your Maven-based project to be published to Maven 
 This project contains a [GitHub Actions workflow file](.github/workflows/branch.yml) that:
 
 * runs the build on every push to any branch
-* publishes to Artifactory on every push to the `release` branch.
+* publishes to Artifactory on every push to the `release` branch (uses the [artifact-publish-token](https://github.com/atlassian-labs/artifact-publish-token) GitHub action to generate temporary access tokens for Artifactory).
 
 To make that work, add these secrets to your GitHub project:
 
