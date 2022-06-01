@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       id-token: write
 
     steps:
@@ -43,11 +43,8 @@ jobs:
       # Publishes to Artifactory only on push to the "release" branch.
       - name: "Publish"
         if: github.ref == 'refs/heads/release'
-        env:
-          GH_USERNAME: ${{ secrets.GH_USERNAME }}
-          GH_PASSWORD: ${{ secrets.GH_PASSWORD }}
         run: |
           chmod 755 mvnw
           export GPG_TTY=$(tty)
-          ./mvnw -s .maven-settings.xml release:prepare
+          ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare
           ./mvnw -Darguments="-Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }}" release:perform -Pdeploy

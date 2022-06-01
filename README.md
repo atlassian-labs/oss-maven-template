@@ -1,4 +1,4 @@
-# oss-gradle-template
+# oss-maven-template
 
 This project template sets up your Maven-based project to be published to Maven Central.
 
@@ -11,8 +11,10 @@ This project template sets up your Maven-based project to be published to Maven 
 ## Publishing to Artifactory
 
 ```
-./gradlew artifactoryPublish
+./mvnw -Darguments="-Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }}" release:perform -Pdeploy
 ```
+
+(see [GitHub Actions workflow file](.github/workflows/branch.yml)).
 
 ## CI 
 
