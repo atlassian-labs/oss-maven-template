@@ -1,0 +1,9 @@
+<settings>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>${env.GH_USERNAME}</username>
+            <password>${env.GH_PASSWORD}</password>
+        </server>
+    </servers>
+</settings>

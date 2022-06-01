@@ -48,6 +48,7 @@
 
     <properties>
         <artifactory.target.repo>maven-central-local</artifactory.target.repo>
+        <project.scm.id>github</project.scm.id>
     </properties>
 
     <profiles>
