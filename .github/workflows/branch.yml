@@ -46,5 +46,5 @@ jobs:
         run: |
           chmod 755 mvnw
           export GPG_TTY=$(tty)
-          ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GH_ACCESS_TOKEN }} release:prepare
+          ./mvnw -Dusername=${{ secrets.GH_USERNAME }} -Dpassword=${{ secrets.GITHUB_TOKEN }} release:prepare
           ./mvnw -Darguments="-Dgpg.passphrase=${{ secrets.SIGNING_PASSWORD }}" release:perform -Pdeploy
